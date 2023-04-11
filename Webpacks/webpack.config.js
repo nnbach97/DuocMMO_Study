@@ -29,4 +29,14 @@ module.exports = {
       },
     ],
   },
+  devServer: {
+    static: {
+      directory: "dist",
+    },
+    port: 6789,
+    open: true,
+    hot: true,
+    compress: true,
+    historyApiFallback: true,
+  },
 };
