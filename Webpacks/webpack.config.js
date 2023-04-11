@@ -8,16 +8,18 @@ module.exports = {
     app: "./src/index.js",
   },
   output: {
-    filename: "[name].js",
+    filename: "[name].[contenthash].js",
     path: path.resolve(__dirname, "htdocs"),
   },
   plugins: [
-    new MiniCssExtractPlugin(),
-    // new HtmlWebpackPlugin({
-    //   title: "Webpack app",
-    //   filename: "index.html",
-    //   template: "./src/tempalte.html",
-    // }),
+    new MiniCssExtractPlugin({
+      filename: "[name].[contenthash].css",
+    }),
+    new HtmlWebpackPlugin({
+      title: "Webpack app",
+      filename: "index.html",
+      template: "./src/tempalte.html",
+    }),
   ],
   module: {
     rules: [
