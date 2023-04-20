@@ -9,13 +9,14 @@ export class Form extends Component {
       msg: '',
       yes: true,
       opt: '',
-      gender: 'Nam'
+      gender: 'Nam',
+      imga: ''
     }
   }
 
   onChangeHandle = (e) => {
     const { target } = e
-    const value = target.type === 'checkbox' ? target.checked : target.value
+    const value = target.type === 'checkbox' ? target.checked : target.type === 'file' ? target.files[0] : target.value
     const { name } = target
     this.setState({
       [name]: value
@@ -52,6 +53,8 @@ export class Form extends Component {
           </select>
           <br />
           <textarea name='msg' onChange={this.onChangeHandle}></textarea>
+          <br />
+          <input type='file' name='imga' onChange={this.onChangeHandle} />
           <br />
           <button type='submit'>Submit</button>
         </form>
