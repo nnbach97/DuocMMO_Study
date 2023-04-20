@@ -1,7 +1,8 @@
 import logo from './logo.svg'
 import './App.css'
-import BareInput from './BareInput'
-import Form from './Form/Form'
+// import BareInput from './BareInput'
+// import Form from './Form/Form'
+import Calculator from './Calculator/Calculator'
 
 function App() {
   return (
@@ -9,7 +10,8 @@ function App() {
       <header className='App-header'>
         <img src={logo} className='App-logo' alt='logo' />
         {/* <BareInput type='text' /> */}
-        <Form />
+        {/* <Form /> */}
+        <Calculator />
       </header>
     </div>
   )
