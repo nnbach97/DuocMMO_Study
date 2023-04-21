@@ -1,8 +1,9 @@
 import logo from './logo.svg'
 import './App.css'
+import FilterProductTable from './iThinking/FilterProductTable'
 // import BareInput from './BareInput'
 // import Form from './Form/Form'
-import Calculator from './Calculator/Calculator'
+// import Calculator from './Calculator/Calculator'
 
 function App() {
   return (
@@ -11,7 +12,8 @@ function App() {
         <img src={logo} className='App-logo' alt='logo' />
         {/* <BareInput type='text' /> */}
         {/* <Form /> */}
-        <Calculator />
+        {/* <Calculator /> */}
+        <FilterProductTable />
       </header>
     </div>
   )
