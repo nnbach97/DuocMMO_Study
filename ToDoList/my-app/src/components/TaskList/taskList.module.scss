@@ -1,0 +1,38 @@
+.TaskList {
+  &Tll {
+    margin-bottom: 0.8rem;
+  }
+
+  .List {
+    &Item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+    &CheckBox {
+      flex: 0 0 10%;
+      max-width: 10%;
+      height: 2rem;
+    }
+    &Content {
+      flex: 0 0 70%;
+      max-width: 70%;
+      &Done {
+        text-decoration: line-through;
+      }
+      
+    }
+    &Btn {
+      flex: 0 0 20%;
+      max-width: 20%;
+      display: flex;
+      justify-content: space-between;
+
+      button {
+        padding: .5rem;
+        flex: 0 0 3rem;
+        max-width: 3rem;
+      }
+    }
+  }
+}

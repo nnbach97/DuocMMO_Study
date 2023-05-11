@@ -1,0 +1,20 @@
+.form {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 2rem;
+  
+  &Input {
+    flex-grow: 1;
+    height: 3rem;
+    padding: 0.5rem 1rem;
+    outline: none;
+    margin-right: .5rem
+  }
+
+  &Btn {
+    flex-shrink: 0;
+    width: 3rem;
+  }
+}
