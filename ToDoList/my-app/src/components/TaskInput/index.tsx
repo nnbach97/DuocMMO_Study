@@ -4,26 +4,36 @@ import { ToDo } from '../../@types/todo.type'
 
 interface TaskInputProps {
   addTodo: (name: string) => void
-  editTodo: (item: ToDo) => void
+  saveTodo: (name: string) => void
+  editTodo: (name: string) => void
+  currentTodo: ToDo | null
 }
 
 export default function TaskInput(props: TaskInputProps) {
-  const { addTodo } = props
+  const { addTodo, saveTodo, editTodo, currentTodo } = props
   const [name, setName] = useState<string>('')
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    if (name.trim() !== '') {
-      addTodo(name)
+    if (currentTodo) {
+      saveTodo(currentTodo.name)
     } else {
-      alert('Moi nhap ')
+      if (name.trim() !== '') {
+        addTodo(name)
+      } else {
+        alert('Moi nhap ')
+      }
     }
     setName('')
   }
 
   const onChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value
-    setName(value)
+    if (currentTodo) {
+      editTodo(value)
+    } else {
+      setName(value)
+    }
   }
   return (
     <div>
@@ -34,11 +44,11 @@ export default function TaskInput(props: TaskInputProps) {
           name='txt'
           placeholder='Enter work'
           className={styles.formInput}
-          value={name}
+          value={currentTodo ? currentTodo.name : name}
           onChange={onChangeName}
         />
         <button type='submit' className={styles.formBtn}>
-          ➕
+          {currentTodo ? '✔' : '➕'}
         </button>
       </form>
     </div>

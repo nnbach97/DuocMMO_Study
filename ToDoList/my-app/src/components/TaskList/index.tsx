@@ -6,10 +6,11 @@ interface TaskListProps {
   listData: ToDo[]
   checkDone: (id: string, done: boolean) => void
   deleteTodo: (id: string) => void
+  clickBtnEdit: (id: string) => void
 }
 
 export default function TaskList(props: TaskListProps) {
-  const { isDone, listData, checkDone, deleteTodo } = props
+  const { isDone, listData, checkDone, deleteTodo, clickBtnEdit } = props
 
   const handleCheckDone = (item: ToDo) => {
     checkDone(item.id, !item.done)
@@ -19,7 +20,9 @@ export default function TaskList(props: TaskListProps) {
     deleteTodo(id)
   }
 
-  const handleEdit = (item: ToDo) => {}
+  const handleEdit = (id: string) => {
+    clickBtnEdit(id)
+  }
 
   return (
     <div className={styles.TaskList}>
@@ -36,7 +39,7 @@ export default function TaskList(props: TaskListProps) {
             />
             <span className={`${styles.ListContent} ${item.done ? styles.ListContentDone : ''} `}>{item.name}</span>
             <div className={styles.ListBtn}>
-              <button onClick={() => handleEdit(item)}>🖋</button>
+              <button onClick={() => handleEdit(item.id)}>🖋</button>
               <button onClick={() => handleDelete(item.id)}>🗑</button>
             </div>
           </div>
