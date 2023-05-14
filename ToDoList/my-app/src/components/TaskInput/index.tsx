@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import styles from './taskInput.module.scss'
 import { ToDo } from '../../@types/todo.type'
+import Title from '../Title'
 
 interface TaskInputProps {
   addTodo: (name: string) => void
@@ -37,7 +38,7 @@ export default function TaskInput(props: TaskInputProps) {
   }
   return (
     <div>
-      <h1 className={styles.ttl}>To Do List Work</h1>
+      <Title nameClss={styles.ttl} value={name} />
       <form className={styles.form} onSubmit={handleSubmit}>
         <input
           type='text'
