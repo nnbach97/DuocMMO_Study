@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import TaskInput from '../TaskInput'
 import TaskList from '../TaskList'
 import styles from './todolist.module.scss'
@@ -10,6 +10,15 @@ export default function ToDoList() {
   const listNotDone = todos.filter((item) => item.done === false)
   const [currentTodo, setCurrentTodo] = useState<ToDo | null>(null)
 
+  useEffect(() => {
+    const db = localStorage.getItem('todolist') || '[]'
+    settodos(JSON.parse(db))
+  }, [])
+
+  const handleLocalStorage = (data: ToDo[]) => {
+    localStorage.setItem('todolist', JSON.stringify(data))
+  }
+
   const addTodo = (name: string) => {
     const todo: ToDo = {
       name,
@@ -17,6 +26,7 @@ export default function ToDoList() {
       id: new Date().toISOString()
     }
     settodos((prev) => [...prev, todo])
+    handleLocalStorage([...todos, todo])
   }
 
   const checkDone = (id: string, done: boolean) => {
@@ -45,6 +55,9 @@ export default function ToDoList() {
     //     list = [...db]
     //   }
     //   settodos(list)
+
+    // localStorage.setItem('todolist', JSON.stringify([...todos, data]))
+    handleLocalStorage(data)
   }
 
   const clickBtnEdit = (id: string) => {
@@ -70,6 +83,7 @@ export default function ToDoList() {
 
     settodos(listNew as ToDo[])
     setCurrentTodo(null)
+    handleLocalStorage(listNew as ToDo[])
   }
 
   return (
