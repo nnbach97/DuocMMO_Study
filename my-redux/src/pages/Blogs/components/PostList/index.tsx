@@ -1,7 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PostItem from '../PostItem';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '../../../../store';
+import { deletePost, startClickEdit } from '../../blog.reducer';
 
 export default function PostList() {
+  let postList = useSelector((state: RootState) => state.blog.postList);
+  const dispatch = useDispatch();
+
+  const handleDelete = (id: string) => {
+    dispatch(deletePost(id));
+  };
+
+  const handleClickEdit = (id: string) => {
+    dispatch(startClickEdit(id));
+  };
+
   return (
     <div>
       <div className='bg-white py-6 sm:py-8 lg:py-12'>
@@ -13,10 +27,9 @@ export default function PostList() {
             </p>
           </div>
           <div className='grid gap-4 sm:grid-cols-2 md:gap-6 lg:grid-cols-2 xl:grid-cols-2 xl:gap-8'>
-            <PostItem />
-            <PostItem />
-            <PostItem />
-            <PostItem />
+            {postList.map((item) => (
+              <PostItem key={item.id} post={item} handleDelete={handleDelete} handleClickEdit={handleClickEdit} />
+            ))}
           </div>
         </div>
       </div>
