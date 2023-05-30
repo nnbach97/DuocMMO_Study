@@ -55,14 +55,19 @@ const blogReducer = createReducer(initialState, (builder) => {
     .addCase(addPost, (state, action) => {
       const data = action.payload;
       state.postList.push(data);
+
+      localStorage.setItem('dat_blog', JSON.stringify(state.postList));
     })
     .addCase(deletePost, (state, action) => {
+      let dataList = [...state.postList];
       const id = action.payload;
       const findIndex = state.postList.findIndex((item) => item.id === id);
 
       if (findIndex !== -1) {
-        state.postList.splice(findIndex, 1);
+        dataList.splice(findIndex, 1);
       }
+
+      localStorage.setItem('dat_blog', JSON.stringify(dataList));
     })
     .addCase(startClickEdit, (state, action) => {
       const id = action.payload;
@@ -73,15 +78,18 @@ const blogReducer = createReducer(initialState, (builder) => {
       }
     })
     .addCase(saveClickEdit, (state, action) => {
+      let dataList = [...state.postList];
       const id = action.payload.id;
-      state.postList.filter((item, index) => {
+      dataList.filter((item, index) => {
         if (item.id === id) {
-          state.postList[index] = action.payload;
+          dataList[index] = action.payload;
         }
 
         return false;
       });
       state.currentItem = null;
+
+      localStorage.setItem('dat_blog', JSON.stringify(dataList));
     })
     .addCase(cancelPost, (state) => {
       state.currentItem = null;

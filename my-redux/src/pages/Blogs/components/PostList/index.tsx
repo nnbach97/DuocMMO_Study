@@ -1,12 +1,24 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PostItem from '../PostItem';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../../../store';
 import { deletePost, startClickEdit } from '../../blog.reducer';
+import { Post } from '../../../../types/blog.type';
 
 export default function PostList() {
-  let postList = useSelector((state: RootState) => state.blog.postList);
   const dispatch = useDispatch();
+
+  let postList = useSelector((state: RootState) => state.blog.postList);
+  // const getStore = localStorage.getItem('dat_blog') || '[]';
+
+  // const [data, setData] = useState<Post[] | []>([]);
+  // let isCheck = JSON.parse(getStore);
+  // let prevDataGet: [] = [];
+
+  // useEffect(() => {
+  //   isCheck.length > 1 ? setData(isCheck) : setData(postList);
+  //   return () => {};
+  // }, []);
 
   const handleDelete = (id: string) => {
     dispatch(deletePost(id));
