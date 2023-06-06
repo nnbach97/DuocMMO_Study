@@ -12,6 +12,8 @@
     "@types/react": "^18.2.6",
     "@types/react-dom": "^18.2.4",
     "autoprefixer": "^10.4.14",
+    "axios": "^1.4.0",
+    "json-server": "^0.17.3",
     "postcss": "^8.4.23",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -29,7 +31,8 @@
     "lint": "eslint --ext js,jsx,ts,tsx src/",
     "lint:fix": "eslint --fix --ext js,jsx,ts,tsx src/",
     "prettier": "prettier --check \"src/**/(*.jsx|*.js|*.tsx|*ts|*.css|*.scss)\"",
-    "prettier:fix": "prettier --write \"src/**/(*.jsx|*.js|*.tsx|*ts|*.css|*.scss)\""
+    "prettier:fix": "prettier --write \"src/**/(*.jsx|*.js|*.tsx|*ts|*.css|*.scss)\"",
+    "start-json": "json-server --watch src/data/db.json --port=4000 --deplay=3000"
   },
   "eslintConfig": {
     "extends": [

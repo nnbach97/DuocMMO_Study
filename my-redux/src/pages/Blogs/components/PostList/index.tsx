@@ -1,24 +1,48 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import PostItem from '../PostItem';
-import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from '../../../../store';
-import { deletePost, startClickEdit } from '../../blog.reducer';
-import { Post } from '../../../../types/blog.type';
+import { useSelector } from 'react-redux';
+import { RootState, useAppDispatch } from '../../../../store';
+// import { deletePost, startClickEdit } from '../../blog.reducer';
+// import http from '../../../../utils/http';
+import { getPostList, deletePost, startClickEdit } from '../../blog.asyncthunk';
+import SkelentonPost from '../Skelenton/SkelentonPost';
 
 export default function PostList() {
-  const dispatch = useDispatch();
-
+  const dispatch = useAppDispatch();
   let postList = useSelector((state: RootState) => state.blog.postList);
-  // const getStore = localStorage.getItem('dat_blog') || '[]';
+  let loading = useSelector((state: RootState) => state.blog.loading);
 
-  // const [data, setData] = useState<Post[] | []>([]);
-  // let isCheck = JSON.parse(getStore);
-  // let prevDataGet: [] = [];
-
+  // Call API k dung asyncThunk
   // useEffect(() => {
-  //   isCheck.length > 1 ? setData(isCheck) : setData(postList);
-  //   return () => {};
-  // }, []);
+  //   http
+  //     .get('posts')
+  //     .then((res: any) => {
+  //       const postListResult = res.data;
+  //       dispatch({
+  //         type: 'blog/getPostListSuccess',
+  //         payload: postListResult
+  //       });
+  //     })
+  //     .catch((error) => {
+  //       dispatch({
+  //         type: 'blog/getPostListFailed',
+  //         payload: error
+  //       });
+  //     });
+
+  //   return () => {
+  //     // controller.abort();
+  //   };
+  // }, [dispatch]);
+
+  // Dung asyncThunk
+  useEffect(() => {
+    const promise = dispatch(getPostList());
+
+    return () => {
+      promise.abort();
+    };
+  }, [dispatch]);
 
   const handleDelete = (id: string) => {
     dispatch(deletePost(id));
@@ -33,15 +57,24 @@ export default function PostList() {
       <div className='bg-white py-6 sm:py-8 lg:py-12'>
         <div className='mx-auto max-w-screen-xl px-4 md:px-8'>
           <div className='mb-10 md:mb-16'>
-            <h2 className='mb-4 text-center text-2xl font-bold text-gray-800 md:mb-6 lg:text-3xl'>Được Dev Blog</h2>
+            <h2 className='mb-4 text-center text-2xl font-bold text-gray-800 md:mb-6 lg:text-3xl'>Blog</h2>
             <p className='mx-auto max-w-screen-md text-center text-gray-500 md:text-lg'>
               Đừng bao giờ từ bỏ. Hôm nay khó khăn, ngày mai sẽ trở nên tồi tệ. Nhưng ngày mốt sẽ có nắng
             </p>
           </div>
           <div className='grid gap-4 sm:grid-cols-2 md:gap-6 lg:grid-cols-2 xl:grid-cols-2 xl:gap-8'>
-            {postList.map((item) => (
-              <PostItem key={item.id} post={item} handleDelete={handleDelete} handleClickEdit={handleClickEdit} />
-            ))}
+            {loading ? (
+              <>
+                <SkelentonPost />
+                <SkelentonPost />
+              </>
+            ) : (
+              <>
+                {postList.map((item) => (
+                  <PostItem key={item.id} post={item} handleDelete={handleDelete} handleClickEdit={handleClickEdit} />
+                ))}
+              </>
+            )}
           </div>
         </div>
       </div>

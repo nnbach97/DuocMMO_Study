@@ -1,13 +1,14 @@
 import React from 'react';
 import { Post } from '../../../../types/blog.type';
 import { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
-import { addPost, saveClickEdit, cancelPost } from '../../blog.reducer';
-import { RootState } from '../../../../store';
+// import { addPost, saveClickEdit, cancelPost } from '../../blog.reducer';
+import { RootState, useAppDispatch } from '../../../../store';
+import { addPost, updatePost, cancelPost } from '../../blog.asyncthunk';
 
-const initialState: Post = {
-  id: new Date().toISOString(),
+const initialState: Omit<Post, 'id'> = {
+  // id: new Date().toISOString(),
   title: '',
   description: '',
   publicDate: '',
@@ -16,9 +17,11 @@ const initialState: Post = {
 };
 
 export default function CreatePost() {
-  const [formData, setFormData] = useState<Post>(initialState);
+  const [formData, setFormData] = useState<Omit<Post, 'id'>>(initialState);
   const currentItem = useSelector((state: RootState) => state.blog.currentItem);
-  const dispatch = useDispatch();
+  let loading = useSelector((state: RootState) => state.blog.loading);
+
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     setFormData(currentItem || initialState);
@@ -29,7 +32,12 @@ export default function CreatePost() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (currentItem) {
-      dispatch(saveClickEdit(formData));
+      dispatch(
+        updatePost({
+          id: currentItem.id,
+          body: formData
+        })
+      );
     } else {
       dispatch(addPost(formData));
     }

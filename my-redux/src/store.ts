@@ -1,6 +1,8 @@
+import { useDispatch } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 // import blogReducer from './pages/Blogs/blog.reducer';
-import blogReducer from './pages/Blogs/blog.slice';
+// import blogReducer from './pages/Blogs/blog.slice';
+import blogReducer from './pages/Blogs/blog.asyncthunk';
 
 export const store = configureStore({
   reducer: { blog: blogReducer }
@@ -11,3 +13,6 @@ export const store = configureStore({
 export type RootState = ReturnType<typeof store.getState>;
 
 export type AppDispatch = typeof store.dispatch;
+
+// su dung dispatch co type
+export const useAppDispatch = () => useDispatch<AppDispatch>();
