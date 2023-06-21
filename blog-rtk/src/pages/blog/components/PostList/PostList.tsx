@@ -3,7 +3,7 @@ import PostItem from '../PostItem'
 import SkeletonPost from '../SkeletonPost'
 
 export default function PostList() {
-  const { data, isLoading, isFetching } = useGetPostsQuery()
+  const { data, isLoading } = useGetPostsQuery()
 
   return (
     <div className='bg-white py-6 sm:py-8 lg:py-12'>
@@ -21,7 +21,7 @@ export default function PostList() {
               <SkeletonPost />
             </>
           )}
-          {!isLoading && data?.map((item) => <PostItem postItem={item} />)}
+          {!isLoading && data?.map((item) => <PostItem postItem={item} key={item.id} />)}
         </div>
       </div>
     </div>
