@@ -1,9 +1,16 @@
 import { useGetPostsQuery } from 'pages/blog/blog.service'
 import PostItem from '../PostItem'
 import SkeletonPost from '../SkeletonPost'
+import { startEditPost } from 'pages/blog/blog.slice'
+import { useDispatch } from 'react-redux'
 
 export default function PostList() {
   const { data, isLoading } = useGetPostsQuery()
+  const dispatch = useDispatch()
+
+  const startEdit = (id: string) => {
+    dispatch(startEditPost(id))
+  }
 
   return (
     <div className='bg-white py-6 sm:py-8 lg:py-12'>
@@ -21,7 +28,7 @@ export default function PostList() {
               <SkeletonPost />
             </>
           )}
-          {!isLoading && data?.map((item) => <PostItem postItem={item} key={item.id} />)}
+          {!isLoading && data?.map((item) => <PostItem postItem={item} key={item.id} startEdit={startEdit} />)}
         </div>
       </div>
     </div>
